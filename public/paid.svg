@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <defs>
+    <style>
+      @keyframes stampIn {
+        0% { transform: scale(2); opacity: 0; }
+        50% { transform: scale(0.8); opacity: 0.5; }
+        75% { transform: scale(1.1); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      .stamp {
+        animation: stampIn 1s ease-out forwards;
+        transform-origin: center;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .border {
+        animation: fadeIn 0.5s ease-out forwards;
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+        animation: draw 2s ease-out forwards;
+      }
+      @keyframes draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+    </style>
+  </defs>
+
+  <!-- Outer border -->
+  <rect x="20" y="10" width="160" height="80" rx="10" 
+        fill="none" 
+        stroke="#22C55E" 
+        stroke-width="3"
+        class="border" />
+
+  <!-- PAID text with stamp effect -->
+  <g class="stamp">
+    <!-- Background circle -->
+    <circle cx="100" cy="50" r="35" 
+            fill="#22C55E" 
+            fill-opacity="0.1" />
+    
+    <!-- PAID text -->
+    <text x="100" y="60" 
+          font-family="Arial, sans-serif" 
+          font-size="24" 
+          font-weight="bold" 
+          fill="#22C55E" 
+          text-anchor="middle">PAID</text>
+  </g>
+</svg>
