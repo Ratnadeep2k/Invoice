@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Invoice Management System
 
-## Getting Started
+## 📌 Project Overview
+An **Invoice Management System** built with Next.js, Auth.js, and Prisma to streamline invoice generation, tracking, and management. Users can send invoices, track payments, and automate reminders.
 
-First, run the development server:
+## 🛠 Tech Stack
+- **Framework**: Next.js (App Router)
+- **Auth**: Auth.js (Magic Link via Mailtrap)
+- **Database**: PostgreSQL (via Prisma ORM)
+- **UI**: TailwindCSS, shadcn/ui
+- **Emails**: Resend / Nodemailer + Mailtrap
+- **PDF Generation**: Puppeteer / PDFKit
+- **Deployment**: Vercel / Railway + GitHub Actions
 
+---
+
+## 📌 Features
+### 🔑 Authentication & Onboarding
+- Magic Link authentication with **Auth.js**
+- Custom **verification route** for email login
+- User onboarding with **name and address** (for invoices)
+
+### 📊 Dashboard & Analytics
+- Overview of invoices, payments, and clients
+- Interactive **charts & stats** for revenue tracking
+
+### 📝 Invoice Management
+- **Create invoices** & send email notifications
+- **Edit invoices** (auto-email updates to clients)
+- **Download invoices as PDFs**
+- **Delete invoices** when needed
+- **Mark invoices as paid**
+- **Automated email reminders** for due invoices
+
+### 🌍 Landing Page
+- Clean and modern **marketing page**
+- SEO-optimized for better visibility
+
+---
+
+## 🛠 Installation & Setup
+### 1️⃣ Clone Repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/invoice-management.git
+cd invoice-management
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2️⃣ Install Dependencies
+```bash
+yarn install   # or npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3️⃣ Set Up Environment Variables
+Create a `.env.local` file and add the following:
+```env
+DATABASE_URL=your_postgresql_url
+NEXTAUTH_SECRET=your_secret_key
+NEXTAUTH_URL=http://localhost:3000
+MAILTRAP_USER=your_mailtrap_user
+MAILTRAP_PASS=your_mailtrap_pass
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4️⃣ Run Database Migrations
+```bash
+npx prisma migrate dev --name init
+```
 
-## Learn More
+### 5️⃣ Start Development Server
+```bash
+yarn dev   # or npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📤 Deployment
+### Deploy on Vercel
+```bash
+vercel
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Deploy on Railway
+```bash
+railway up
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚀 Roadmap & Future Enhancements
+- [ ] Implement Stripe integration for payments
+- [ ] Add multi-user/team functionality
+- [ ] Support recurring invoices
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📜 License
+This project is licensed under the **MIT License**.
+
+---
+
+## 🤝 Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you’d like to change.
+
+---
+
+## 📧 Contact
+For inquiries, reach out at: [your@email.com](mailto:your@email.com)
+
+**Happy Coding! 🚀**
+
+# Invoice
