@@ -33,7 +33,7 @@ export default async function Login() {
                                 required
                                 />
                             </div>
-                            <SubmitButton/>
+                            <SubmitButton text='sign in'/>
                         </form>
                     </CardContent>
                 </Card>
