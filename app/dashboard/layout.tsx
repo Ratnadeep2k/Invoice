@@ -3,9 +3,10 @@ import { requireUser } from "../utils/hooks"
 import im from '@/public/im.svg'
 import Image from "next/image"
 import { DashBoardLinks } from "../components/DasboardLinks"
-import { Menu } from "lucide-react"
+import { Menu, User2, Users2 } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
     const session = await requireUser()
@@ -46,8 +47,18 @@ export default async function DashboardLayout({ children }: { children: React.Re
                             </SheetContent>
                         </Sheet>
 
-                    </header>
+                        <div className="flex items-center ml-auto">
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button className="rounded-full" variant='outline' size='icon' >
+                                        <User2/>
+                                    </Button>
+                                </DropdownMenuTrigger>
+                            </DropdownMenu>
 
+                        </div>
+             
+                    </header>
                 </div>
             </div>
         </>
