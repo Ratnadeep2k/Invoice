@@ -25,7 +25,7 @@ export function DashBoardLinks(){
         <> 
             {dashboardLinks.map((link)=>(
                  <Link className={cn(
-                    pathname === link.href ? 'text-blue-600 text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground',
+                    pathname === link.href ? 'text-blue-600 text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground',"flex items-center gap-3 rounded-md px-3 py-2 transition-all hover:text-primary"
                  )} href={link.href} key={link.id}>
                     <link.icon className="size-4"/>
                     {link.name}
