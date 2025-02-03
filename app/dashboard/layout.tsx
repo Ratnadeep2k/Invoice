@@ -6,7 +6,8 @@ import { DashBoardLinks } from "../components/DasboardLinks"
 import { Menu, User2, Users2 } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { signOut } from "../utils/auth"
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
     const session = await requireUser()
@@ -54,6 +55,29 @@ export default async function DashboardLayout({ children }: { children: React.Re
                                         <User2/>
                                     </Button>
                                 </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                    <DropdownMenuLabel>
+                                        My Account
+                                    </DropdownMenuLabel>
+                                    <DropdownMenuSeparator/>
+                                    <DropdownMenuItem asChild>
+                                        <Link href="/dashboard">Dashboard</Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem asChild>
+                                        <Link href="/dashboard/invoices">Invoices</Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator/>
+                                    <DropdownMenuItem asChild>
+                                        <form className="w-full" action={async ()=>{
+                                            'use server'
+                                            await signOut();
+                                        }}>
+                                            <button className="w-full text-left">
+                                                Logout
+                                            </button>
+                                        </form>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
                             </DropdownMenu>
 
                         </div>
