@@ -9,11 +9,25 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import {  CalendarIcon } from "lucide-react";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { date } from "zod";
 import { SubmitButton } from "./SubmitButton";
+import { createInvoice } from "../actions";
+import { invoiceSchema } from "../utils/zodSchema";
+import { parseWithZod } from "@conform-to/zod";
+import { useForm } from "@conform-to/react";
 
 export function CreateInvoice(){
+
+    const [lastResult , action ] =useActionState(createInvoice,undefined) //coming from action 
+    const [] =useForm({
+        lastResult,
+        onValidate({formData}){
+            return parseWithZod(formData,{
+                schema:invoiceSchema
+            })
+        }
+    })
     const [selectDate ,setSelectDate] = useState( new Date());
     return (
         <Card className="w-full max-w-4xl mx-auto ">
