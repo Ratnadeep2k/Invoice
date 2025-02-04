@@ -9,7 +9,7 @@ export default async function Dashboard() {
                     "use server"
                     await signOut()
                 }}
-            >
+            > 
                 <button type="submit">Sign Out</button>
             </form>
         </div>
