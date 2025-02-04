@@ -7,9 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import {  CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { date } from "zod";
+import { SubmitButton } from "./SubmitButton";
 
 export function CreateInvoice(){
     const [selectDate ,setSelectDate] = useState( new Date());
@@ -69,7 +71,7 @@ export function CreateInvoice(){
                 </div>
                 
 
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
                     <div>
                         <div>
                         <Label>Issue Date</Label>
@@ -110,10 +112,56 @@ export function CreateInvoice(){
                              </SelectContent>
                         </Select>
                     </div>
+                </div>
+                <div>
+                    <div className="grid grid-cols-12 gap-4 mb-4 font-medium">
+                       <p className='col-span-6'>Description</p>
+                       <p className="col-span-2">Quantity</p>
+                       <p className="col-span-2">Rate</p>
+                       <p className="col-span-2">Amount</p>
+                    </div>
 
+                    <div className="grid grid-cols-12 gap-4 mb-4">
+                        <div className="col-span-6">
+                            <Textarea placeholder="Item name and Description "/>
+                        </div>
+                        <div className="col-span-2">
+                            <Input type="text" placeholder="0"/>
+                        </div>
+                        <div className="col-span-2">
+                            <Input type="number" placeholder="0"/>
+                        </div>
+                        <div className="col-span-2">
+                            <Input type="number" placeholder="0" disabled/>
+                        </div>
+                        
+                    </div>
                 </div>
 
+                <div className="flex justify-end gap-4">
+                    <div className="w-1/3">
+                    <div className="flex justify-between py-2">
+                        <span>Subtotal </span>
+                        <span>$0.00</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-t">
+                        <span>Total(USD)</span>
+                        <span className="font-medium underline underline-offset-2">$5.00</span>
 
+                    </div>
+                    </div>
+
+                </div>
+            <div className="mb-6 mt-6">
+                <Label>Note</Label>
+                <Textarea placeholder="Add a note to your invoice"/>
+            </div>
+
+            <div className="flex justify-end items-center ">
+               <div>
+                  <SubmitButton text="Send Invoice to client"/>
+               </div>
+            </div>
 
 
             </CardContent>
