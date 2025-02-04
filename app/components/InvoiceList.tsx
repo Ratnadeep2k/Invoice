@@ -15,17 +15,7 @@ export function InvoiceList() {
                 </TableRow>
             </TableHeader>
 
-            <TableBody>
-                <TableRow>
-                    <td>INV-001</td>
-                    <td>John Doe</td>
-                    <td>$100.00</td>
-                    <td>Unpaid</td>
-                    <td>2021-01-01</td>
-                    <td className="text-right">
-                        <button>View</button>
-                    </td>
-                </TableRow>
+            <TableBody>    
                 <TableRow>
                    <TableCell>#1</TableCell>
                    <TableCell>Jhon Doe </TableCell>
