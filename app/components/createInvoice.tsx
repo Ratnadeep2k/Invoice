@@ -26,7 +26,9 @@ export function CreateInvoice(){
             return parseWithZod(formData,{
                 schema:invoiceSchema
             })
-        }
+        },
+        shouldValidate:'onBlur',
+        shouldRevalidate:'onInput',
     })
     const [selectDate ,setSelectDate] = useState( new Date());
     return (
@@ -66,9 +68,9 @@ export function CreateInvoice(){
 
 
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
-                    <div>
+                    <div >
                         <Label>From</Label>
-                        <div>
+                        <div className="space-y-2">
                             <Input placeholder=" Your Name"/>
                             <Input placeholder=" Your Email"/>
                             <Input placeholder=" Your Address"/>
