@@ -1,5 +1,7 @@
+import { InvoiceList } from "@/app/components/InvoiceList";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table } from "@/components/ui/table";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -20,7 +22,7 @@ export default function InvoicesPage() {
                </div>
           </CardHeader>
           <CardContent>
-                
+            <InvoiceList/>
           </CardContent>
        </Card>
     );
