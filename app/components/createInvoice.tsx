@@ -34,6 +34,11 @@ export function CreateInvoice(){
     const [rate ,setRate] = useState('');
     const [quantity ,setQuantity] = useState('');
     const calculateTotal = (Number(rate) || 0 )* (Number(quantity) || 0);
+
+    const [currency,setCurrency] =useState('USD');
+
+
+
     return (
         <Card className="w-full max-w-4xl mx-auto ">
             <form id={form.id} action={action} onSubmit ={form.onSubmit} noValidate>
@@ -76,6 +81,7 @@ export function CreateInvoice(){
                     <Select defaultValue="USD"
                     name={fields.currency.name}
                     key={fields.currency.key}
+                    onValueChange={(value)=>setCurrency(value)}
 
                     >
                         <SelectTrigger >
@@ -233,7 +239,7 @@ export function CreateInvoice(){
                         </div>
                         <div className="col-span-2">
                             <Input 
-                            value={formateCurrency(calculateTotal)} disabled/>
+                            value={formateCurrency({amount:calculateTotal , currency:currency as any})} disabled/>
                         </div>
                     </div>
                 </div>
@@ -242,11 +248,11 @@ export function CreateInvoice(){
                     <div className="w-1/3">
                     <div className="flex justify-between py-2">
                         <span>Subtotal </span>
-                        <span>${calculateTotal}</span>
+                        <span>{formateCurrency({amount:calculateTotal , currency:currency as any})}</span>
                     </div>
                     <div className="flex justify-between py-2 border-t">
-                        <span>Total(USD)</span>
-                        <span className="font-medium underline underline-offset-2"> ${calculateTotal}</span>
+                        <span>Total ({currency})</span>
+                        <span className="font-medium underline underline-offset-2">{formateCurrency({amount:calculateTotal , currency:currency as any})}</span>
 
                     </div>
                     </div>
