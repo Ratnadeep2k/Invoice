@@ -30,7 +30,7 @@ export function CreateInvoice(){
         shouldValidate:'onBlur',
         shouldRevalidate:'onInput',
     })
-    const [selectDate ,setSelectDate] = useState( new Date());
+    const [selectedDate ,setSelectedDate] = useState(new Date());
     const [rate ,setRate] = useState('');
     const [quantity ,setQuantity] = useState('');
     const calculateTotal = (Number(rate) || 0 )* (Number(quantity) || 0);
@@ -41,13 +41,18 @@ export function CreateInvoice(){
 
     return (
         <Card className="w-full max-w-4xl mx-auto ">
+            <CardContent className="p-6">
             <form id={form.id} action={action} onSubmit ={form.onSubmit} noValidate>
             <input
+            type="hidden"
+            name={fields.date.name}
+            value={selectedDate.toISOString()}
+          />
+            <input
              type="hidden"
-             name={fields.date.name}
-             value={selectDate.toISOString()}
+             name={fields.total.name}
+             value={calculateTotal}
             />
-            <CardContent className="p-6">
                <div className="flex flex-col gap-1 w-fit mb-6">
                   <div className="flex items-center gap-4">
                    <Badge variant='secondary'>Draft</Badge>
@@ -153,34 +158,38 @@ export function CreateInvoice(){
                 
 
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <div>
-                        <Label>Issue Date</Label>
-                        </div>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button variant='outline'>
-                                    <CalendarIcon className="size-4 mr-2"/>
-                                    {selectDate?(
-                                        new Intl.DateTimeFormat('en-US',{
-                                            dateStyle:'medium'
-                                        }).format(selectDate)
-                                    ):(
-                                        <span>Select a Date </span>
-                                    )}
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent>
-                                <Calendar mode="single"
-                                selected={selectDate}
-                                onSelect={(date)=>setSelectDate(date as Date)}
-                                fromDate={new Date()}
-                                />
-                            </PopoverContent>
-                        </Popover>
-                        <p className="text-red-800 text-sm">{fields.date.errors}</p>
-                    </div>
+            <div>
+              <div>
+                <Label>Date</Label>
+              </div>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="w-[280px] text-left justify-start"
+                  >
+                    <CalendarIcon />
 
+                    {selectedDate ? (
+                      new Intl.DateTimeFormat("en-US", {
+                        dateStyle: "long",
+                      }).format(selectedDate)
+                    ) : (
+                      <span>Pick a Date</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <Calendar
+                    selected={selectedDate}
+                    onSelect={(date) => setSelectedDate(date || new Date())}
+                    mode="single"
+                    fromDate={new Date()}
+                  />
+                </PopoverContent>
+              </Popover>
+              <p className="text-red-500 text-sm">{fields.date.errors}</p>
+            </div>
                     <div>
                         <label>Due Date</label>
                         <Select 
@@ -267,14 +276,13 @@ export function CreateInvoice(){
                 placeholder="Add a note to your invoice"/>
                 <p className="text-red-800 text-sm">{fields.note.errors}</p>
             </div>
-
             <div className="flex justify-end items-center ">
                <div>
-                  <SubmitButton text="Send Invoice to client"/>
+                  <SubmitButton text="Send invoice to client"/>
                </div>
             </div>
-            </CardContent>
             </form>
+            </CardContent>
         </Card>
     )
 }

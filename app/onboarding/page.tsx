@@ -6,7 +6,7 @@ import { useActionState } from "react";
 import { onboardUser } from "../actions";
 import {useForm} from '@conform-to/react'
 import { parseWithZod } from "@conform-to/zod";
-import { onBoardingSchema } from "../utils/zodSchema";
+import { onboardingSchema } from "../utils/zodSchema";
 
 export default function OnboardingPage() {
     const [lastResult,action] =useActionState(onboardUser,undefined);
@@ -14,7 +14,7 @@ export default function OnboardingPage() {
         lastResult,
         onValidate({formData}){
             return parseWithZod(formData,{
-                schema:onBoardingSchema
+                schema:onboardingSchema
            })
         },
         shouldValidate:'onBlur',

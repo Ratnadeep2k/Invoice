@@ -1,26 +1,42 @@
-import  {z} from 'zod';
-export const onBoardingSchema =z.object({
-    firstName:z.string().min(2,'firstname is required').max(10,'should max of 10char').nonempty(),
-    lastName:z.string().nonempty().min(2,'lastname is required').max(10,'should max of 10char'),
-    address:z.string().nonempty().min(2,'address is required').max(10,'should max of 10char')
-})
+import { z } from "zod";
+
+export const onboardingSchema = z.object({
+  firstName: z.string().min(2, "First name is required"),
+  lastName: z.string().min(2, "Last name is required"),
+  address: z.string().min(2, "Address is required"),
+});
 
 export const invoiceSchema = z.object({
-    invoiceName :z.string().nonempty().min(2,'invoice name is required').max(10,'should max of 10char'),
-    total:z.number().int().positive().min(1,'Min should be  is $1'),
-    status :z.enum(['PAID','PENDING']),
-    date:z.string().min(2,'date is required'),
-    dueDate :z.number().min(2,'due date is required'),
-    fromName :z.string().min(2,'from name is required'),
-    fromEmail :z.string().email().min(2,'from email is required'),
-    fromAddress :z.string().min(2,'from address is required'),
-    clientName :z.string().min(2,'to name is required'),
-    clientEmail :z.string().email().min(2,'to email is required'),
-    clientAddress :z.string().nonempty().min(2,'to address is required'),
-    currency :z.string().nonempty().min(2,'currency is required'),
-    invoiceNumber :z.number().min(1,'invoice number is required'),
-    note :z.string().optional(),
-    invoiceItemDescription :z.string().min(2,'invoice item description is required'),
-    invoiceItemQuantity :z.number().int().positive().min(1,'Min should be  is 1'),
-    invoiceItemRate :z.number().int().positive().min(1,'Min should be  is $1'),
-})
+  invoiceName: z.string().min(1, "Invoice Name is required"),
+  total: z.number().min(1, "1$ is minimum"),
+
+  status: z.enum(["PAID", "PENDING"]).default("PENDING"),
+
+  date: z.string().min(1, "Date is required"),
+
+  dueDate: z.number().min(0, "Due Date is required"),
+
+  fromName: z.string().min(1, "Your name is required"),
+
+  fromEmail: z.string().email("Invalid Email address"),
+
+  fromAddress: z.string().min(1, "Your address is required"),
+
+  clientName: z.string().min(1, "Client name is required"),
+
+  clientEmail: z.string().email("Invalid Email address"),
+
+  clientAddress: z.string().min(1, "Client address is required"),
+
+  currency: z.string().min(1, "Currency is required"),
+
+  invoiceNumber: z.number().min(1, "Minimum invoice number of 1"),
+
+  note: z.string().optional(),
+
+  invoiceItemDescription: z.string().min(1, "Description is required"),
+
+  invoiceItemQuantity: z.number().min(1, "Qunatity min 1"),
+
+  invoiceItemRate: z.number().min(1, "Rate min 1"),
+});
