@@ -79,11 +79,11 @@ export async function createInvoice(prevState: any, formData: FormData) {
     template_variables: {
       "clientName": submission.value.clientName,
       "invoiceNumber": submission.value.invoiceNumber,
-      "dueDate": new Intl.DateTimeFormat("en-US", {
+      "invoiceDueDate": new Intl.DateTimeFormat("en-US", {
         dateStyle: "long",
       }).format(new Date(submission.value.dueDate)),
       "totalAmount": formateCurrency({amount: submission.value.total, currency: submission.value.currency as any}),
-      "invoiceLink": "https://invoiceapp.com/invoice/" ,
+      "invoiceLink": `http://localhost:3001/api/invoice/${data.id}`,
     }
   })
   return redirect("/dashboard/invoices");
