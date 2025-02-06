@@ -1,7 +1,34 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { InvoiceActions } from "./InvoiceActions";
+import { prisma } from "../utils/db";
+import { requireUser } from "../utils/hooks";
+import { formateCurrency } from "../utils/formateCurrency";
 
-export function InvoiceList() {
+async function getData(userId:string){
+
+    const data =await prisma.invoice.findMany({
+        where :{
+            userId:userId,
+        },
+        select:{
+          id:true,
+            total:true,
+            status:true,
+            createdAt:true,
+            clientName:true,  
+            invoiceNumber:true,
+            currency:true,
+        },
+        orderBy:{
+            createdAt:"desc",
+        }
+    });
+    return data;
+}
+
+export async function InvoiceList() {
+    const session = await requireUser()
+    const data = await getData(session.user?.id as string);
     return (
         <Table>
             <TableHeader>
@@ -16,14 +43,23 @@ export function InvoiceList() {
             </TableHeader>
 
             <TableBody>    
-                <TableRow>
-                   <TableCell>#1</TableCell>
-                   <TableCell>Jhon Doe </TableCell>
-                   <TableCell>$50.00 </TableCell>
-                   <TableCell>Paid</TableCell>
-                   <TableCell>05/02/2025 </TableCell>
-                     <TableCell className="text-right"><InvoiceActions/></TableCell>
-                </TableRow>
+                {data.map((invoice)=>(
+                     <TableRow key={invoice.id}>
+                     <TableCell>{invoice.invoiceNumber}</TableCell>
+                     <TableCell>{invoice.clientName}</TableCell>
+                     <TableCell>{formateCurrency({
+                        amount:invoice.total,
+                        currency: invoice.currency as any
+                     })}</TableCell>
+                     <TableCell>{invoice.status}</TableCell>
+                     <TableCell>{new Intl.DateTimeFormat('en-US',{
+                            dateStyle:'medium'
+                     }).format(new Date(invoice.createdAt))
+                     }</TableCell>
+                       <TableCell className="text-right"><InvoiceActions/></TableCell>
+                  </TableRow>
+                ))}
+               
             </TableBody>
         </Table>
     )
