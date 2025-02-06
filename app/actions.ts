@@ -6,6 +6,7 @@ import { onboardingSchema, invoiceSchema } from "./utils/zodSchema";
 
 import { redirect } from "next/navigation";
 import { prisma } from "./utils/db";
+import { emailClient } from "./utils/mailtrap";
 
 export async function onboardUser(prevState: any, formData: FormData) {
   const session = await requireUser();
@@ -65,5 +66,17 @@ export async function createInvoice(prevState: any, formData: FormData) {
       userId: session.user?.id,
     },
   });
+  const sender = {
+    email: "hello@demomailtrap.com",
+    name: "RATNADEEP",
+  };
+
+  emailClient.send({
+    from: sender,
+    to: [{email: 'baruahratnadeep365@gmail.com'}],
+    subject: "Invoice created",
+    text: "Invoice has been created successfully",
+    category: "Invoice test",
+  })
   return redirect("/dashboard/invoices");
 }
