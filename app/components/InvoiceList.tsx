@@ -3,6 +3,7 @@ import { InvoiceActions } from "./InvoiceActions";
 import { prisma } from "../utils/db";
 import { requireUser } from "../utils/hooks";
 import { formateCurrency } from "../utils/formateCurrency";
+import { Badge } from "@/components/ui/badge";
 
 async function getData(userId:string){
 
@@ -51,7 +52,9 @@ export async function InvoiceList() {
                         amount:invoice.total,
                         currency: invoice.currency as any
                      })}</TableCell>
-                     <TableCell>{invoice.status}</TableCell>
+                     <TableCell>
+                        <Badge>{invoice.status}</Badge>
+                    </TableCell>
                      <TableCell>{new Intl.DateTimeFormat('en-US',{
                             dateStyle:'medium'
                      }).format(new Date(invoice.createdAt))
