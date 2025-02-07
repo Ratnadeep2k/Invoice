@@ -15,7 +15,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { invoiceSchema } from "../utils/zodSchema";
 import { useActionState, useState } from "react";
 import { useForm } from "@conform-to/react";
-import { createInvoice } from "../actions";
+import { editInvoice } from "../actions";
 import { Prisma } from "@prisma/client";
 
 
@@ -25,7 +25,7 @@ interface iAppProps{
 
 
 export function EditInvoice ({data}:iAppProps){
-    const [lastResult , action ] =useActionState(createInvoice,undefined) //coming from action 
+    const [lastResult , action ] =useActionState(editInvoice,undefined) //coming from action 
         const [form ,fields] =useForm({
             lastResult,
             onValidate({formData}){
@@ -55,6 +55,11 @@ export function EditInvoice ({data}:iAppProps){
              type="hidden"
              name={fields.total.name}
              value={calculateTotal}
+            />
+            <input
+             type="hidden"
+             name='id'
+             value={data.id}
             />
                <div className="flex flex-col gap-1 w-fit mb-6">
                   <div className="flex items-center gap-4">
