@@ -45,7 +45,7 @@ export function InvoiceActions({id}:iAppProps) {
                         <Mail className="size-4 mr-2"/ > Send Reminder
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                    <Link href='' >
+                    <Link href={`/dashboard/invoices/${id}/delete`} >
                         <Trash2Icon className="size-4 mr-2"/> Delete Invoice 
                     </Link>
                 </DropdownMenuItem>
