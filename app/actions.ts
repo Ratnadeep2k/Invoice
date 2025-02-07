@@ -86,7 +86,6 @@ export async function createInvoice(prevState: any, formData: FormData) {
   })
   return redirect("/dashboard/invoices");
 }
-
 export async function editInvoice(prevState:any,formData : FormData ){
 
   const session = await requireUser();
@@ -122,5 +121,31 @@ export async function editInvoice(prevState:any,formData : FormData ){
       note: submission.value.note,
     }
   })
+
+  const sender = {
+    email: "hello@demomailtrap.com",
+    name: "RATNADEEP",
+  };
+
+  emailClient.send({
+    from: sender,
+    to: [{email: 'baruahratnadeep365@gmail.com'}],
+    template_uuid: "98a95b99-fba9-43c9-baea-cd2c62f00469",
+    template_variables: {
+      "clientName": submission.value.clientName,
+      "invoiceNumber": submission.value.invoiceNumber,
+      "invoiceDueDate": new Intl.DateTimeFormat("en-US", {
+        dateStyle: "long",
+      }).format(new Date(submission.value.dueDate)),
+      "totalAmount": formateCurrency({amount: submission.value.total, currency: submission.value.currency as any}),
+      "invoiceLink": `http://localhost:3000/api/invoice/${data.id}`,
+    }
+  })
+
+
+
+
+
+
   return redirect("/dashboard/invoices");
 }
