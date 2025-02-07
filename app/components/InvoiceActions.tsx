@@ -7,8 +7,6 @@ import Link from "next/link";
 interface iAppProps {
     id:string ;
 }
-
-
 export function InvoiceActions({id}:iAppProps) {
     return (
        <DropdownMenu>
@@ -45,6 +43,5 @@ export function InvoiceActions({id}:iAppProps) {
                 </DropdownMenuItem>
             </DropdownMenuContent>
        </DropdownMenu>
-
     )
 }
