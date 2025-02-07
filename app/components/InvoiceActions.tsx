@@ -4,8 +4,12 @@ import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import {  CheckCircle, DownloadCloudIcon, Mail, MoreHorizontal, Pencil, Trash2Icon } from "lucide-react";
 import Link from "next/link";
 
+interface iAppProps {
+    id:string ;
+}
 
-export function InvoiceActions() {
+
+export function InvoiceActions({id}:iAppProps) {
     return (
        <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -15,7 +19,7 @@ export function InvoiceActions() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end'>
                 <DropdownMenuItem asChild>
-                    <Link href='' >
+                    <Link href={`/dashboard/invoices/${id}`} >
                         <Pencil className="size-4 mr-2"/> Edit Invoice 
                     </Link>
                 </DropdownMenuItem>
