@@ -1,5 +1,6 @@
 import { prisma } from "@/app/utils/db";
 import { requireUser } from "@/app/utils/hooks";
+import{ EditInvoice} from "@/app/components/editInvoice";
 
 async function getData(invoiceId:string , userId:string){
 
@@ -22,7 +23,7 @@ export default async function EditInvoiceRoute({params}:{params : Params}) {
     const data = await getData(invoiceId, session.user?.id as string);
     return (
         <div>
-        <h1>Edit Invoice</h1>
+            <EditInvoice data ={data} />
         </div>
     );
 }     

@@ -1,51 +1,47 @@
 'use client'
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import {  CalendarIcon } from "lucide-react";
-import { useActionState, useState } from "react";
 import { SubmitButton } from "./SubmitButton";
-import { createInvoice } from "../actions";
-import { invoiceSchema } from "../utils/zodSchema";
-import { parseWithZod } from "@conform-to/zod";
-import { useForm } from "@conform-to/react";
 import { formateCurrency } from "../utils/formateCurrency";
+import { parseWithZod } from "@conform-to/zod";
+import { invoiceSchema } from "../utils/zodSchema";
+import { useActionState, useState } from "react";
+import { useForm } from "@conform-to/react";
+import { createInvoice } from "../actions";
+import { Prisma } from "@prisma/client";
 
-interface iAppProps {
-    firstName: string;
-    lastName: string;
-    address: string;
-    email: string;
+
+interface iAppProps{
+    data :Prisma.InvoiceGetPayload<{}>
 }
 
-export function CreateInvoice({address,email,firstName,lastName}:iAppProps){
 
+export function EditInvoice ({data}:iAppProps){
     const [lastResult , action ] =useActionState(createInvoice,undefined) //coming from action 
-    const [form ,fields] =useForm({
-        lastResult,
-        onValidate({formData}){
-            return parseWithZod(formData,{
-                schema:invoiceSchema
-            })
-        },
-        shouldValidate:'onBlur',
-        shouldRevalidate:'onInput',
-    })
-    const [selectedDate ,setSelectedDate] = useState(new Date());
-    const [rate ,setRate] = useState('');
-    const [quantity ,setQuantity] = useState('');
-    const calculateTotal = (Number(rate) || 0 )* (Number(quantity) || 0);
-
-    const [currency,setCurrency] =useState('USD');
-
-
-
+        const [form ,fields] =useForm({
+            lastResult,
+            onValidate({formData}){
+                return parseWithZod(formData,{
+                    schema:invoiceSchema
+                })
+            },
+            shouldValidate:'onBlur',
+            shouldRevalidate:'onInput',
+        })
+        const [selectedDate ,setSelectedDate] = useState(data.date);
+        const [rate ,setRate] = useState(data.invoiceItemRate.toString());
+        const [quantity ,setQuantity] = useState(data.invoiceItemQuantity.toString());
+        const calculateTotal = (Number(rate) || 0 )* (Number(quantity) || 0);
+    
+        const [currency,setCurrency] =useState(data.currency);
     return (
         <Card className="w-full max-w-4xl mx-auto ">
             <CardContent className="p-6">
@@ -67,7 +63,7 @@ export function CreateInvoice({address,email,firstName,lastName}:iAppProps){
                     name={fields.invoiceName.name} 
                     key={fields.invoiceName.key} 
                     placeholder="Test 123"
-                    defaultValue={fields.invoiceName.initialValue}
+                    defaultValue={data.invoiceName}
                     />
                   </div>
                   <p className="text-red-800 text-sm">{fields.invoiceName.errors}</p>
@@ -80,7 +76,7 @@ export function CreateInvoice({address,email,firstName,lastName}:iAppProps){
                         <Input 
                         name={fields.invoiceNumber.name}
                         key={fields.invoiceNumber.key}
-                        defaultValue={fields.invoiceNumber.initialValue}
+                        defaultValue={data.invoiceNumber}
                         className="rounded-l-none" 
                         placeholder="1"
                         />
@@ -120,20 +116,20 @@ export function CreateInvoice({address,email,firstName,lastName}:iAppProps){
                             <Input 
                             name={fields.fromName.name}
                             key={fields.fromName.key}
-                            defaultValue={firstName+' '+lastName}
+                            defaultValue={data.fromName}
                             placeholder=" Your Name"/>
                              <p className="text-red-800 text-sm">{fields.fromName.errors}</p>
                             <Input 
                             name={fields.fromEmail.name}
                             key={fields.fromEmail.key}
-                            defaultValue={email}
+                            defaultValue={data.fromEmail}
                             placeholder=" Your Email"
                             />
                             <p className="text-red-800 text-sm">{fields.fromEmail.errors}</p>
                             <Input 
                             name={fields.fromAddress.name}
                             key={fields.fromAddress.key}
-                            defaultValue={address}
+                            defaultValue={data.fromAddress}
                             placeholder=" Your Address"/>
                             <p className="text-red-800 text-sm">{fields.fromAddress.errors}</p>
                         </div>
@@ -145,20 +141,20 @@ export function CreateInvoice({address,email,firstName,lastName}:iAppProps){
                             <Input
                             name={fields.clientName.name}
                             key={fields.clientName.key}
-                            defaultValue={fields.clientName.initialValue}
+                            defaultValue={data.clientName}
                              placeholder=" Client Name"/>
                              <p className="text-red-800 text-sm">{fields.clientName.errors}</p>
                             <Input 
                             name={fields.clientEmail.name}
                             key={fields.clientEmail.key}
-                            defaultValue={fields.clientEmail.initialValue}
+                            defaultValue={data.clientEmail}
                             placeholder=" Client Email"
                             />
                             <p className="text-red-800 text-sm">{fields.clientEmail.errors}</p>
                             <Input 
                             name={fields.clientAddress.name}
                             key={fields.clientAddress.key}
-                            defaultValue={fields.clientAddress.initialValue}
+                            defaultValue={data.clientAddress}
                             placeholder=" Client Address"
                             />
                             <p className="text-red-800 text-sm">{fields.clientAddress.errors}</p>
@@ -205,7 +201,7 @@ export function CreateInvoice({address,email,firstName,lastName}:iAppProps){
                         <Select 
                         name={fields.dueDate.name}
                         key={fields.dueDate.key}
-                        defaultValue={fields.dueDate.initialValue}
+                        defaultValue={data.dueDate.toString()}
                         >
                             <SelectTrigger>
                                 <SelectValue placeholder="Select Due Date"></SelectValue>
@@ -233,7 +229,7 @@ export function CreateInvoice({address,email,firstName,lastName}:iAppProps){
                             <Textarea 
                             name={fields.invoiceItemDescription.name}
                             key={fields.invoiceItemDescription.key}
-                            defaultValue={fields.invoiceItemDescription.initialValue}
+                            defaultValue={data.invoiceItemDescription}
                             placeholder="Item name and Description "/>
                             <p className="text-red-800 text-sm">{fields.invoiceItemDescription.errors}</p>
                         </div>
@@ -282,13 +278,13 @@ export function CreateInvoice({address,email,firstName,lastName}:iAppProps){
                 <Textarea 
                 name={fields.note.name}
                 key={fields.note.key}
-                defaultValue={fields.note.initialValue}
+                defaultValue={data.note ?? ''}
                 placeholder="Add a note to your invoice"/>
                 <p className="text-red-800 text-sm">{fields.note.errors}</p>
             </div>
             <div className="flex justify-end items-center ">
                <div>
-                  <SubmitButton text="Send invoice to client"/>
+                  <SubmitButton text="Update Invoice"/>
                </div>
             </div>
             </form>
