@@ -17,7 +17,14 @@ import { parseWithZod } from "@conform-to/zod";
 import { useForm } from "@conform-to/react";
 import { formateCurrency } from "../utils/formateCurrency";
 
-export function CreateInvoice(){
+interface iAppProps {
+    firstName: string;
+    lastName: string;
+    address: string;
+    email: string;
+}
+
+export function CreateInvoice({address,email,firstName,lastName}:iAppProps){
 
     const [lastResult , action ] =useActionState(createInvoice,undefined) //coming from action 
     const [form ,fields] =useForm({
@@ -113,17 +120,20 @@ export function CreateInvoice(){
                             <Input 
                             name={fields.fromName.name}
                             key={fields.fromName.key}
+                            defaultValue={firstName+' '+lastName}
                             placeholder=" Your Name"/>
                              <p className="text-red-800 text-sm">{fields.fromName.errors}</p>
                             <Input 
                             name={fields.fromEmail.name}
                             key={fields.fromEmail.key}
+                            defaultValue={email}
                             placeholder=" Your Email"
                             />
                             <p className="text-red-800 text-sm">{fields.fromEmail.errors}</p>
                             <Input 
                             name={fields.fromAddress.name}
                             key={fields.fromAddress.key}
+                            defaultValue={address}
                             placeholder=" Your Address"/>
                             <p className="text-red-800 text-sm">{fields.fromAddress.errors}</p>
                         </div>
