@@ -86,10 +86,6 @@ export async function DashboardBlock(){
                         <p className="text-xs text-muted-foreground">Unpaid Invoices </p>  
                 </CardContent>
             </Card>
-
-
-
-
         </div>
     )
 }
