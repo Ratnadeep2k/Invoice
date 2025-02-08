@@ -49,8 +49,8 @@ export async function DashboardBlock(){
                 </CardHeader>
                 <CardContent>
                         <h2 className="text-2xl font-bold">
-                            {data.reduce((acc, invoice) => acc + (invoice as {total:number}).total , 0 )
-                            }
+                            ${data.reduce((acc, invoice) => acc + (invoice as {total:number}).total , 0 )
+                            }.00
 
                         </h2>
                         <p className="text-xs text-muted-foreground">Since last month</p>
@@ -78,7 +78,7 @@ export async function DashboardBlock(){
             </Card>
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Open Invoices</CardTitle>
+                    <CardTitle className="text-sm font-medium">Pending Invoices</CardTitle>
                     <Activity className="size-4 text-muted-foreground"/>
                 </CardHeader>
                 <CardContent>
