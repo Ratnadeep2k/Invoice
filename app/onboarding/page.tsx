@@ -74,7 +74,6 @@ export default function OnboardingPage() {
                 </form>
             </CardContent>
         </Card>
-
        </div>
     )
 }
